@@ -1,3 +1,7 @@
+from flask import Flask
+
+from app.assets.unit import BaseUnit
+
 app = Flask(__name__)
 
 heroes = {

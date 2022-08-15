@@ -1,4 +1,4 @@
-from unit import BaseUnit
+from app.assets.unit import BaseUnit
 
 class BaseSingleton(type):
     _instances = {}
