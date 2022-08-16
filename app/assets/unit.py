@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from equipment import Weapon, Armor
+from app.assets.equipment import Weapon, Armor
 from app.assets.classes import UnitClass
 from typing import Optional
 

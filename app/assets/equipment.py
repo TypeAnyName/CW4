@@ -46,31 +46,29 @@ class Equipment:
 
     def get_weapon(self, weapon_name) -> Weapon:
         # TODO возвращает объект оружия по имени
-        for weapon in EquipmentData.weapons:
+        for weapon in self.equipment.weapons:
             if weapon_name == weapon.name:
                 return weapon
 
     def get_armor(self, armor_name) -> Armor:
-        # TODO возвращает объект брони по имени
-        for armor in EquipmentData.armors:
+        for armor in self.equipment.armors:
             if armor_name == armor.name:
                 return armor
 
     def get_weapons_names(self) -> list:
         weapons_names_list = []
-        for weapons in EquipmentData.weapons:
+        for weapons in self.equipment.weapons:
             weapons_names_list.append(weapons.name)
         return weapons_names_list
 
     def get_armors_names(self) -> list:
         armors_names_list = []
-        for armors in EquipmentData.armors:
+        for armors in self.equipment.armors:
             armors_names_list.append(armors.name)
         return armors_names_list
 
     @staticmethod
     def _get_equipment_data() -> EquipmentData:
-        # TODO этот метод загружает json в переменную EquipmentData
         equipment_file = open("C:/Users/alexg/PycharmProjects/CW4/data/equipment.json")
         data = json.load(equipment_file)
         equipment_schema = marshmallow_dataclass.class_schema(EquipmentData)
@@ -78,3 +76,5 @@ class Equipment:
             return equipment_schema().load(data)
         except marshmallow.exceptions.ValidationError:
             raise ValueError
+
+

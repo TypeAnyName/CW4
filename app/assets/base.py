@@ -51,7 +51,7 @@ class Arena(metaclass=BaseSingleton):
             self.enemy.stamina += self.STAMINA_PER_ROUND
 
     def next_turn(self):
-        # TODO СЛЕДУЮЩИЙ ХОД -> return result | return self.enemy.hit(self.player)
+        # TODO СЛЕДУЮЩИЙ ХОД ->A return result | return self.enemy.hit(self.player)
         # TODO срабатывает когда игроп пропускает ход или когда игрок наносит удар.
         # TODO создаем поле result и проверяем что вернется в результате функции self._check_players_hp
         # TODO если result -> возвращаем его
