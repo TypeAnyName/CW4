@@ -1,5 +1,6 @@
 from app.assets.unit import BaseUnit
 
+
 class BaseSingleton(type):
     _instances = {}
 
@@ -16,11 +17,13 @@ class Arena(metaclass=BaseSingleton):
     enemy = None
     game_is_running = False
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
         # TODO НАЧАЛО ИГРЫ -> None
         # TODO присваиваем экземпляру класса аттрибуты "игрок" и "противник"
         # TODO а также выставляем True для свойства "началась ли игра"
-        pass
+        self.player = player
+        self.enemy = enemy
+        self.game_is_running = True
 
     def _check_players_hp(self):
         # TODO ПРОВЕРКА ЗДОРОВЬЯ ИГРОКА И ВРАГА
@@ -28,13 +31,24 @@ class Arena(metaclass=BaseSingleton):
         # TODO может быть три результата:
         # TODO Игрок проиграл битву, Игрок выиграл битву, Ничья и сохраняем его в аттрибуте (self.battle_result)
         # TODO если Здоровья игроков в порядке то ничего не происходит
-        pass
+        self.battle_result = ""
+        if self.player.health_points == self.enemy.health_points:
+            return self.battle_result == "Ничья"
+        elif self.enemy.health_points <= 0:
+            return self.battle_result == "Игрок выиграл"
+        elif self.player.health_points <= 0:
+            return self.battle_result == "Игрок проиграл"
+        else:
+            pass
 
     def _stamina_regeneration(self):
         # TODO регенерация здоровья и стамины для игрока и врага за ход
         # TODO в этом методе к количеству стамины игрока и врага прибавляется константное значение.
         # TODO главное чтобы оно не привысило максимальные значения (используйте if)
-        pass
+        if self.player.stamina_points < self.player.unit_class.max_stamina:
+            self.player.stamina += self.STAMINA_PER_ROUND
+        if self.enemy.stamina_points < self.enemy.unit_class.max_stamina:
+            self.enemy.stamina += self.STAMINA_PER_ROUND
 
     def next_turn(self):
         # TODO СЛЕДУЮЩИЙ ХОД -> return result | return self.enemy.hit(self.player)
@@ -44,25 +58,36 @@ class Arena(metaclass=BaseSingleton):
         # TODO если же результата пока нет и после завершения хода игра продолжается,
         # TODO тогда запускаем процесс регенирации стамины и здоровья для игроков (self._stamina_regeneration)
         # TODO и вызываем функцию self.enemy.hit(self.player) - ответный удар врага
-        pass
+        result = self._check_players_hp()
+        if result is True:
+            return result
+        if result is False:
+            self._stamina_regeneration()
+            self.enemy.hit(self.player)
 
     def _end_game(self):
         # TODO КНОПКА ЗАВЕРШЕНИЕ ИГРЫ - > return result: str
         # TODO очищаем синглтон - self._instances = {}
         # TODO останавливаем игру (game_is_running)
         # TODO возвращаем результат
-        pass
+        self._instances = {}
+        self.game_is_running = False
+        return self.battle_result
 
     def player_hit(self):
         # TODO КНОПКА УДАР ИГРОКА -> return result: str
         # TODO получаем результат от функции self.player.hit
         # TODO запускаем следующий ход
         # TODO возвращаем результат удара строкой
-        pass
+        turn = self.player.hit(self.enemy)
+        self.next_turn()
+        return turn
 
     def player_use_skill(self):
         # TODO КНОПКА ИГРОК ИСПОЛЬЗУЕТ УМЕНИЕ
         # TODO получаем результат от функции self.use_skill
         # TODO включаем следующий ход
         # TODO возвращаем результат удара строкой
-        pass
+        turn = self.player.use_skill(self.enemy)
+        self.next_turn()
+        return turn

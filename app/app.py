@@ -1,6 +1,6 @@
 from flask import Flask
 
-from app.assets.unit import BaseUnit
+from app.app import BaseUnit
 
 app = Flask(__name__)
 

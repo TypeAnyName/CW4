@@ -28,8 +28,9 @@ class Weapon:
         unknown = marshmallow.EXCLUDE
 
     @property
-    def damage(self):
-        return random.uniform(self.min_damage, self.max_damage)
+    def damage(self) -> float:
+        weapon_damage = random.uniform(self.min_damage, self.max_damage)
+        return weapon_damage
 
 
 @dataclass
