@@ -75,7 +75,7 @@ def choose_hero():
         armor_name = request.form.get("armor_name")
         player = PlayerUnit(user_name, unit_class, weapon_name, armor_name)
         heroes["player"] = player
-    
+
 
 
 
