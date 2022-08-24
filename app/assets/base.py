@@ -1,4 +1,4 @@
-from app.assets.unit import BaseUnit
+from app.assets.unit import BaseUnit, PlayerUnit, EnemyUnit
 
 
 class BaseSingleton(type):
@@ -17,7 +17,7 @@ class Arena(metaclass=BaseSingleton):
     enemy = None
     game_is_running = False
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
+    def start_game(self, player: PlayerUnit, enemy: EnemyUnit) -> None:
         # TODO НАЧАЛО ИГРЫ -> None
         # TODO присваиваем экземпляру класса аттрибуты "игрок" и "противник"
         # TODO а также выставляем True для свойства "началась ли игра"
