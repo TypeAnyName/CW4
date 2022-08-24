@@ -39,13 +39,13 @@ class BaseUnit(ABC):
         return f"{self.name} экипирован броней {self.armor.name}"
 
     def _count_damage(self, target: BaseUnit):
-        counting_damage = Weapon.damage * self.unit_class.attack
+        counting_damage = self.weapon.damage * self.unit_class.attack
         if target.stamina >= self.armor.stamina_per_turn:
-            counting_armor = Armor.defence * self.unit_class.armor
+            counting_armor = self.armor.defence * self.unit_class.armor
         else:
             counting_armor = 0
         damage = counting_damage - counting_armor
-        self.stamina -= Weapon.stamina_per_hit
+        self.stamina -= self.weapon.stamina_per_hit
         target.get_damage(damage)
         # TODO Эта функция должна содержать:
         #  логику расчета урона игрока
@@ -93,7 +93,7 @@ class PlayerUnit(BaseUnit):
         вызывается функция self._count_damage(target)
         а также возвращается результат в виде строки
         """
-        if self.stamina >= Weapon.stamina_per_hit:
+        if self.stamina >= self.weapon.stamina_per_hit:
             damage = self._count_damage(target)
             if damage <= 0:
                 return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
@@ -115,7 +115,7 @@ class EnemyUnit(BaseUnit):
         функция _count_damage(target
         """
         if self._is_skill_used:
-            if self.stamina >= Weapon.stamina_per_hit:
+            if self.stamina >= self.weapon.stamina_per_hit:
                 damage = self._count_damage(target)
                 if damage <= 0:
                     return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
