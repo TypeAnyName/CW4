@@ -12,12 +12,12 @@ heroes = {
     "enemy": EnemyUnit
 }
 
-arena = Arena()  # TODO инициализируем класс арены
+arena = Arena()
 
 
 @app.route("/")
 def menu_page():
-    return render_template("index.html")  # TODO рендерим главное меню (шаблон index.html)
+    return render_template("index.html")
 
 
 @app.route("/fight/")
@@ -57,7 +57,6 @@ def pass_turn():
 
 @app.route("/fight/end-fight")
 def end_fight():
-    # TODO кнопка завершить игру - переход в главное меню
     return render_template("index.html", heroes=heroes)
 
 

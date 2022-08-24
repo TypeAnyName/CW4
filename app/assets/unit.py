@@ -47,14 +47,6 @@ class BaseUnit(ABC):
         damage = counting_damage - counting_armor
         self.stamina -= self.weapon.stamina_per_hit
         target.get_damage(damage)
-        # TODO Эта функция должна содержать:
-        #  логику расчета урона игрока
-        #  логику расчета брони цели
-        #  здесь же происходит уменьшение выносливости атакующего при ударе
-        #  и уменьшение выносливости защищающегося при использовании брони
-        #  если у защищающегося нехватает выносливости - его броня игнорируется
-        #  после всех расчетов цель получает урон - target.get_damage(damage)
-        #  и возвращаем предполагаемый урон для последующего вывода пользователю в текстовом виде
         return damage
 
     def get_damage(self, damage: float):
@@ -62,20 +54,9 @@ class BaseUnit(ABC):
 
     @abstractmethod
     def hit(self, target: BaseUnit) -> str:
-        """
-        этот метод будет переопределен ниже
-        """
         pass
 
     def use_skill(self, target: BaseUnit) -> str:
-        """
-        метод использования умения.
-        если умение уже использовано возвращаем строку
-        Навык использован
-        Если же умение не использовано тогда выполняем функцию
-        self.unit_class.skill.use(user=self, target=target)
-        и уже эта функция вернем нам строку которая характеризует выполнение умения
-        """
         if self._is_skill_used:
             result = "Умение уже использовано"
             return result
@@ -91,12 +72,6 @@ class BaseUnit(ABC):
 class PlayerUnit(BaseUnit):
 
     def hit(self, target: BaseUnit) -> str:
-        """
-        функция удар игрока:
-        здесь происходит проверка достаточно ли выносливости для нанесения удара.
-        вызывается функция self._count_damage(target)
-        а также возвращается результат в виде строки
-        """
         if self.stamina >= self.weapon.stamina_per_hit:
             damage = self._count_damage(target)
             if damage <= 0:
@@ -114,14 +89,6 @@ class PlayerUnit(BaseUnit):
 class EnemyUnit(BaseUnit):
 
     def hit(self, target: BaseUnit) -> str:
-        """
-        функция удар соперника
-        должна содержать логику применения соперником умения
-        (он должен делать это автоматически и только 1 раз за бой).
-        Например, для этих целей можно использовать функцию randint из библиотеки random.
-        Если умение не применено, противник наносит простой удар, где также используется
-        функция _count_damage(target
-        """
         if self._is_skill_used:
             if self.stamina >= self.weapon.stamina_per_hit:
                 damage = self._count_damage(target)

@@ -56,11 +56,6 @@ class FuryPunch(Skill):
         self.user.stamina -= self.stamina
         self.target.hp -= self.damage
         return f"{self.user.name} использует {self.name} и наносит {self.damage} урона сопернику."
-        # TODO логика использования скилла -> return str
-        # TODO в классе нам доступны экземпляры user и target - можно использовать любые их методы
-        # TODO именно здесь происходит уменшение стамины у игрока применяющего умение и
-        # TODO уменьшение здоровья цели.
-        # TODO результат применения возвращаем строкой
 
 
 class HardShot(Skill):

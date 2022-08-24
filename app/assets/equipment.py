@@ -45,7 +45,6 @@ class Equipment:
         self.equipment = self._get_equipment_data()
 
     def get_weapon(self, weapon_name) -> Weapon:
-        # TODO возвращает объект оружия по имени
         for weapon in self.equipment.weapons:
             if weapon_name == weapon.name:
                 return weapon
