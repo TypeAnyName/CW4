@@ -22,39 +22,37 @@ def menu_page():
 
 @app.route("/fight/")
 def start_fight():
-    arena.start_game(player=heroes["player"], enemy=heroes['enemy'])
-    return render_template("fight.html", heroes=heroes)
-
+    result = arena.start_game(player=heroes["player"], enemy=heroes['enemy'])
+    return render_template("fight.html", heroes=heroes, result=result)
 
 @app.route("/fight/hit")
 def hit():
     if arena.game_is_running:
-        arena.player_hit()
-        return render_template("fight.html", heroes=heroes)
+        result = arena.player_hit()
+        return render_template("fight.html", heroes=heroes, result=result)
     else:
-        arena._end_game()
-        return render_template("index.html", heroes=heroes)
+        result = arena._end_game()
+        return render_template("fight.html", heroes=heroes, result=result)
 
 
 @app.route("/fight/use-skill")
 def use_skill():
     if arena.game_is_running:
-        arena.player_use_skill()
-        return render_template("fight.html", heroes=heroes)
+        result = arena.player_use_skill()
+        return render_template("fight.html", heroes=heroes, result=result)
     else:
-        arena._end_game()
-        return render_template("index.html", heroes=heroes)
+        result = arena._end_game()
+        return render_template("fight.html", heroes=heroes, result=result)
 
 
 @app.route("/fight/pass-turn")
 def pass_turn():
     if arena.game_is_running:
-        arena.next_turn()
-
-        return render_template("fight.html", heroes=heroes)
+        result = arena.next_turn()
+        return render_template("fight.html", heroes=heroes, result=result)
     else:
-        arena._end_game()
-        return render_template("index.html", heroes=heroes)
+        result = arena._end_game()
+        return render_template("fight.html", heroes=heroes, result=result)
 
 
 @app.route("/fight/end-fight")

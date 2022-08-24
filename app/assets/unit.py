@@ -77,10 +77,14 @@ class BaseUnit(ABC):
         и уже эта функция вернем нам строку которая характеризует выполнение умения
         """
         if self._is_skill_used:
-            return "Умение уже использовано"
+            result = "Умение уже использовано"
+            return result
         else:
             self.unit_class.skill.use(user=self, target=target)
             self._is_skill_used = True
+            result = f"{self.name} использует {self.unit_class.skill.name} и наносит {round(self.unit_class.skill.damage, 2)} урона сопернику."
+            return result
+
 
 
 
@@ -96,11 +100,15 @@ class PlayerUnit(BaseUnit):
         if self.stamina >= self.weapon.stamina_per_hit:
             damage = self._count_damage(target)
             if damage <= 0:
-                return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
+                result = f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
+                return result
             elif damage > 0:
-                return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона."
+                result = f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {round(damage, 2)} урона."
+                return result
         else:
-            return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
+            result = f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
+            return result
+
 
 
 class EnemyUnit(BaseUnit):
@@ -118,11 +126,16 @@ class EnemyUnit(BaseUnit):
             if self.stamina >= self.weapon.stamina_per_hit:
                 damage = self._count_damage(target)
                 if damage <= 0:
-                    return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
+                    result = f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его останавливает."
+                    return result
                 elif damage > 0:
-                    return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона."
+                    result = f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {round(damage, 2)} урона."
+                    return result
             else:
-                return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
+
+                result = f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
+                return result
         else:
-            self.use_skill(target)
+            result = self.use_skill(target)
+            return result
 
