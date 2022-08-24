@@ -59,9 +59,9 @@ class Arena(metaclass=BaseSingleton):
         # TODO тогда запускаем процесс регенирации стамины и здоровья для игроков (self._stamina_regeneration)
         # TODO и вызываем функцию self.enemy.hit(self.player) - ответный удар врага
         result = self._check_players_hp()
-        if result is True:
+        if result:
             return result
-        if result is False:
+        if result == "":
             self._stamina_regeneration()
             self.enemy.hit(self.player)
 

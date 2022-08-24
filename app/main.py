@@ -50,6 +50,7 @@ def use_skill():
 def pass_turn():
     if arena.game_is_running:
         arena.next_turn()
+
         return render_template("fight.html", heroes=heroes)
     else:
         arena._end_game()
