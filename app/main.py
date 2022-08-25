@@ -25,34 +25,23 @@ def start_fight():
     result = arena.start_game(player=heroes["player"], enemy=heroes['enemy'])
     return render_template("fight.html", heroes=heroes, result=result)
 
+
 @app.route("/fight/hit")
 def hit():
-    if arena.game_is_running:
-        result = arena.player_hit()
-        return render_template("fight.html", heroes=heroes, result=result)
-    else:
-        result = arena._end_game()
-        return render_template("fight.html", heroes=heroes, result=result)
+    result = arena.player_hit()
+    return render_template("fight.html", heroes=heroes, result=result)
 
 
 @app.route("/fight/use-skill")
 def use_skill():
-    if arena.game_is_running:
-        result = arena.player_use_skill()
-        return render_template("fight.html", heroes=heroes, result=result)
-    else:
-        result = arena._end_game()
-        return render_template("fight.html", heroes=heroes, result=result)
+    result = arena.player_use_skill()
+    return render_template("fight.html", heroes=heroes, result=result)
 
 
 @app.route("/fight/pass-turn")
 def pass_turn():
-    if arena.game_is_running:
-        result = arena.next_turn()
-        return render_template("fight.html", heroes=heroes, result=result)
-    else:
-        result = arena._end_game()
-        return render_template("fight.html", heroes=heroes, result=result)
+    result = arena.next_turn()
+    return render_template("fight.html", heroes=heroes, result=result)
 
 
 @app.route("/fight/end-fight")
@@ -101,7 +90,7 @@ def choose_enemy():
         weapon_name = request.form.get("weapon")
         armor_name = request.form.get("armor")
         enemy_unit = EnemyUnit(name=user_name, unit_class=unit_class, weapon=equipment.get_weapon(weapon_name),
-                                 armor=equipment.get_armor(armor_name))
+                               armor=equipment.get_armor(armor_name))
         heroes["enemy"] = enemy_unit
         return redirect(url_for("start_fight"), 301)
 

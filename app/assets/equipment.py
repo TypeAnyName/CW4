@@ -75,5 +75,3 @@ class Equipment:
             return equipment_schema().load(data)
         except marshmallow.exceptions.ValidationError:
             raise ValueError
-
-

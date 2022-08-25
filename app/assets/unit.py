@@ -24,7 +24,7 @@ class BaseUnit(ABC):
 
     @property
     def health_points(self):
-        return round(self.hp, 1)
+        return round(self.hp, 2)
 
     @property
     def stamina_points(self):
@@ -67,8 +67,6 @@ class BaseUnit(ABC):
             return result
 
 
-
-
 class PlayerUnit(BaseUnit):
 
     def hit(self, target: BaseUnit) -> str:
@@ -83,7 +81,6 @@ class PlayerUnit(BaseUnit):
         else:
             result = f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
             return result
-
 
 
 class EnemyUnit(BaseUnit):
@@ -105,4 +102,3 @@ class EnemyUnit(BaseUnit):
         else:
             result = self.use_skill(target)
             return result
-

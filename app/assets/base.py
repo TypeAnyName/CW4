@@ -17,7 +17,6 @@ class Arena(metaclass=BaseSingleton):
     enemy = None
     game_is_running = False
 
-
     def start_game(self, player: PlayerUnit, enemy: EnemyUnit) -> None:
         self.player = player
         self.enemy = enemy
@@ -25,18 +24,15 @@ class Arena(metaclass=BaseSingleton):
         return "Бой начался"
 
     def _check_players_hp(self):
-        self.battle_result = ''
+        self.battle_result = ""
         if self.player.health_points <= 0:
             self.battle_result == "Игрок проиграл"
-            self._end_game()
+            return self.battle_result
         elif self.enemy.health_points <= 0:
             self.battle_result == "Игрок выиграл"
-            self._end_game()
+            return self.battle_result
         else:
             pass
-        result = self.battle_result
-        return result
-
 
     def _stamina_regeneration(self):
         if self.player.stamina_points < self.player.unit_class.max_stamina:
@@ -60,8 +56,6 @@ class Arena(metaclass=BaseSingleton):
     def _end_game(self):
         self._instances = {}
         self.game_is_running = False
-        result = self.battle_result
-        return result
 
     def player_hit(self):
         result = self.player.hit(self.enemy)
